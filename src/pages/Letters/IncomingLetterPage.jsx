@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import IncomingLetterForm from '../../components/Letters/IncomingLetterForm';
+import IncomingLetterForm from '../../components/letters/IncomingLetterForm';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 
 function IncomingLetterPage() {
