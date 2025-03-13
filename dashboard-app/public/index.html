@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard App</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to the Dashboard</h1>
+            <div class="login-dropdown">
+                <label for="user-role">Sign in as:</label>
+                <select id="user-role">
+                    <option value="lecturer">Lecturer</option>
+                    <option value="administrator">Administrator</option>
+                </select>
+                <button id="login-button">Login</button>
+            </div>
+        </header>
+        <div class="dashboard">
+            <aside class="sidebar">
+                <!-- Sidebar component will be rendered here -->
+            </aside>
+            <main class="main-content">
+                <!-- Dashboard content will be rendered here -->
+            </main>
+        </div>
+    </div>
+    <script src="path/to/your/bundled/javascript.js"></script>
+</body>
+</html>
