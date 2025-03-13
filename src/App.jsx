@@ -66,11 +66,13 @@ function App() {
         <Route 
           path="/login" 
           element={
-            auth.isAuthenticated ? (
-              <Navigate to={auth.userType === 'admin' ? '/admin-dashboard' : '/dashboard'} replace />
-            ) : (
-              <Login setAuth={setAuth} />
-            )
+            <Login setAuth={setAuth} />
+
+            // auth.isAuthenticated ? (
+            //   <Navigate to={auth.userType === 'admin' ? '/admin-dashboard' : '/login'} replace />
+            // ) : (
+            //   <Login setAuth={setAuth} />
+            // )
           } 
         />
         <Route path="/signup" element={<Signup />} />
