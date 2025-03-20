@@ -18,7 +18,7 @@ function AdminSidebar({ onSelectSection, currentSection }) {
   const menuItems = [
     { name: 'Dashboard', icon: ChartBarIcon, section: 'dashboard' },
     { name: 'Employees', icon: UserIcon, section: 'employees' },
-    { name: 'Attendance', icon: QrCodeIcon, section: 'attendance' },
+    { name: 'View Attendance', icon: QrCodeIcon, section: 'employeeAttendance' }, // Updated item
     { name: 'Visitor Logs', icon: UserGroupIcon, section: 'visitors' },
     { name: 'Letters', icon: EnvelopeIcon, section: 'letters' },
   ];

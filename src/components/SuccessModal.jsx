@@ -7,24 +7,10 @@ function SuccessModal({ isOpen, onRequestClose }) {
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="fixed inset-0 flex items-center justify-center z-[9999] mt-30"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-[9998]"
-      style={{
-        content: {
-          position: 'relative',
-          border: 'none',
-          background: 'transparent',
-          overflow: 'auto',
-          padding: 0,
-          outline: 'none'
-        },
-        overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-          backdropFilter: 'blur(4px)'
-        }
-      }}
+      overlayClassName="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[9998]"
+      className="relative bg-white rounded-2xl shadow-2xl p-8 w-[400px] transform transition-all"
     >
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-[400px] transform transition-all">
+      <div className="flex flex-col items-center">
         <div className="mb-6">
           <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
             <svg

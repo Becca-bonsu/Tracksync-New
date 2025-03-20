@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import VisitorPage from './pages/VisitorPage';
 import LecturerDashboard from './pages/LecturerDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import AdministratorDashboard from './components/SuperAdmin/AdministratorDashboard';
 import ClassListPage from './pages/ClassListPage';
 import ClassList from './components/class/ClassList';
 import IncomingLetterPage from './pages/Letters/IncomingLetterPage';
@@ -14,12 +14,18 @@ import QRCodePage from './pages/QRCodePage';
 import ScanAttendance from './components/attendance/ScanAttendance';
 import IndividualClassListPage from './pages/IndividualClassListPage';
 import EmployeeRegistration from './pages/EmployeeRegistration';
-import SuperAdminDashboard from './components/SuperAdmin/SuperAdminDashboard';
-import SuperAdminLogin from './components/SuperAdmin/SuperAdminLogin';
 import DashboardOverview from './components/SuperAdmin/DashboardOverview';
 import AdminManagement from './components/SuperAdmin/AdminManagement';
 import ProgramsAndCourses from './components/SuperAdmin/ProgramsAndCourses';
 import VisitorLogs from './components/VisitorLogs';
+import ProtectedRoute from './components/ProtectedRoute';
+import UnifiedDashboard from './components/UnifiedDashboard';
+import UniversalLogin from './components/UniversalLogin';
+import TakeAttendancePage from './pages/TakeAttendancePage';
+import TickAttendance from './components/attendance/TickAttendance';
+import HrAdminDashboard from './pages/HrAdminDashboard';
+import StudentDashboard from './pages/StudentDashboard';
+import CourseDetails from './pages/CourseDetails';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +45,7 @@ function App() {
     setIsLoading(false);
   }, []);
 
-  const ProtectedRoute = ({ children, allowedUserType }) => {
+  const ProtectedRouteComponent = ({ children, allowedUserType }) => {
     if (isLoading) {
       return null;
     }
@@ -48,8 +54,8 @@ function App() {
       return <Navigate to="/login" replace />;
     }
 
-    if (allowedUserType && auth.userType !== allowedUserType) {
-      return <Navigate to={auth.userType === 'admin' ? '/admin-dashboard' : '/dashboard'} replace />;
+    if (allowedUserType && auth.userType.toLowerCase() !== allowedUserType.toLowerCase()) {
+      return <Navigate to="/dashboard" replace />;
     }
 
     return children;
@@ -66,13 +72,7 @@ function App() {
         <Route 
           path="/login" 
           element={
-            <Login setAuth={setAuth} />
-
-            // auth.isAuthenticated ? (
-            //   <Navigate to={auth.userType === 'admin' ? '/admin-dashboard' : '/login'} replace />
-            // ) : (
-            //   <Login setAuth={setAuth} />
-            // )
+            <UniversalLogin />
           } 
         />
         <Route path="/signup" element={<Signup />} />
@@ -81,90 +81,158 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute allowedUserType="lecturer">
-              <LecturerDashboard />
-            </ProtectedRoute>
+            <ProtectedRouteComponent>
+              <UnifiedDashboard userRole={auth.userType} />
+            </ProtectedRouteComponent>
           }
         />
         <Route
           path="/class-list"
           element={
-            <ProtectedRoute allowedUserType="lecturer">
+            <ProtectedRouteComponent allowedUserType="lecturer">
               <ClassListPage />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
           }
         />
         <Route
           path="/class-list/:courseId"
           element={
-            <ProtectedRoute allowedUserType="lecturer">
+            <ProtectedRouteComponent allowedUserType="lecturer">
               <IndividualClassListPage />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
+          }
+        />
+        <Route
+          path="/lecturer-dashboard"
+          element={
+            <ProtectedRouteComponent allowedUserType="lecturer">
+              <LecturerDashboard />
+            </ProtectedRouteComponent>
           }
         />
         
-        {/* Admin Routes */}
+        {/* Admin Routes
         <Route
           path="/admin-dashboard"
           element={
-            <ProtectedRoute allowedUserType="admin">
+            <ProtectedRouteComponent allowedUserType="admin">
               <AdminDashboard />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
           }
-        />
+        /> */}
         <Route
-          path="/admin-dashboard/employee-registration"
+          path="/hr-admin-dashboard/employee-registration"
           element={
-            <ProtectedRoute allowedUserType="admin">
+            <ProtectedRouteComponent allowedUserType="HrAdmin">
               <EmployeeRegistration />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
           }
         />
         
         {/* Shared Routes */}
         <Route path="/scan-attendance" element={<ScanAttendance />} />
+        <Route path="/scan-attendance/:courseId" element={<ScanAttendance />} />
+        <Route path="/tick-attendance/:courseId" element={<TickAttendance />} />
         <Route path="/visitor-registration" element={<PublicVisitorForm />} />
         <Route
           path="/visitor"
           element={
-            <ProtectedRoute>
+            <ProtectedRouteComponent>
               <VisitorPage />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
           }
         />
         <Route
           path="/qr-code"
           element={
-            <ProtectedRoute>
+            <ProtectedRouteComponent>
               <QRCodePage />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
           }
         />
         <Route
-          path="/attendance"
+          path="/attendance/:courseId"
           element={
-            <ProtectedRoute>
+            <ProtectedRouteComponent>
               <AttendancePage />
-            </ProtectedRoute>
+            </ProtectedRouteComponent>
           }
         />
         
-        {/* Super Admin Routes */}
-        <Route path="/super-admin/login" element={<SuperAdminLogin />} />
-        <Route 
+        {/* Super Admin Routes
+        <Route path="/super-admin/login" element={<SuperAdminLogin />} /> */}
+        {/* <Route 
           path="/super-admin/dashboard" 
           element={
-            <ProtectedRoute allowedUserType="superadmin">
-              <SuperAdminDashboard />
-            </ProtectedRoute>
+            <ProtectedRouteComponent allowedUserType="administrator">
+              <AdministratorDashboard />
+            </ProtectedRouteComponent>
+          } 
+        /> */}
+        <Route
+          path="/super-admin/*"
+          element={
+            <ProtectedRouteComponent allowedUserType="administrator">
+              <AdministratorDashboard />
+            </ProtectedRouteComponent>
+          }
+        />
+        <Route 
+          path="/visitor-logs" 
+          element={
+            <ProtectedRouteComponent allowedUserType="administrator">
+              <VisitorLogs />
+            </ProtectedRouteComponent>
           } 
         />
-        <Route path="/super-admin" element={<DashboardOverview />} />
-        <Route path="/super-admin/admins" element={<AdminManagement />} />
-        <Route path="/super-admin/programs" element={<ProgramsAndCourses />} />
         
-        {/* Visitor Logs */}
-        <Route path="/visitor-logs" element={<VisitorLogs />} />
+        {/* Take Attendance Route */}
+        <Route
+          path="/take-attendance"
+          element={
+            <ProtectedRouteComponent>
+              <TakeAttendancePage />
+            </ProtectedRouteComponent>
+          }
+        />
+        
+        {/* Hr Admin Routes */}
+        <Route
+          path="/hr-admin-dashboard"
+          element={
+            <ProtectedRouteComponent allowedUserType="hrAdmin">
+              <HrAdminDashboard />
+            </ProtectedRouteComponent>
+          }
+        />
+        
+        {/* Administrator Dashboard Route */}
+        <Route
+          path="/administrator-dashboard/*"
+          element={
+            <ProtectedRouteComponent allowedUserType="administrator">
+              <AdministratorDashboard />
+            </ProtectedRouteComponent>
+          }
+        />
+        
+        {/* Student Routes */}
+        <Route
+          path="/student-dashboard"
+          element={
+            <ProtectedRouteComponent allowedUserType="student">
+              <StudentDashboard />
+            </ProtectedRouteComponent>
+          }
+        />
+        <Route
+          path="/student-dashboard/courses/:courseId"
+          element={
+            <ProtectedRouteComponent allowedUserType="student">
+              <CourseDetails />
+            </ProtectedRouteComponent>
+          }
+        />
         
         {/* Default route */}
         <Route 

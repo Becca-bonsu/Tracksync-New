@@ -1,0 +1,41 @@
+/* HrAdminDashboard.css */
+
+.Hradmin-dashboard {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+.dashboard-content {
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Add padding around the content */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+h1 {
+    font-size: 2rem; /* Heading size */
+    color: #333; /* Dark text color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.summary-section {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between items */
+    margin-top: 20px; /* Space above the summary section */
+}
+
+.summary-section > div {
+    flex: 1; /* Each summary item takes equal space */
+    margin-right: 10px; /* Space between summary items */
+    background-color: #fff; /* White background for summary items */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside summary items */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.summary-section > div:last-child {
+    margin-right: 0; /* Remove margin for the last item */
+}
+
+/* Add any additional styles as needed */

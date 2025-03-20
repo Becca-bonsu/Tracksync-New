@@ -7,16 +7,18 @@ import {
   ClipboardDocumentListIcon,
   Cog8ToothIcon,
   ArrowRightOnRectangleIcon,
-  BriefcaseIcon
+  BriefcaseIcon,
+  UsersIcon
 } from '@heroicons/react/24/outline';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import DashboardOverview from '../SuperAdmin/DashboardOverview';
-import AdminManagement from '../SuperAdmin/AdminManagement';
-import ProgramsAndCourses from '../SuperAdmin/ProgramsAndCourses';
+import DashboardOverview from './DashboardOverview';
+import AdminManagement from './AdminManagement';
+import ProgramsAndCourses from './ProgramsAndCourses';
 import VisitorLogs from '../VisitorLogs';
 import LecturerManagement from './LecturerManagement';
+import EmployeeManagement from './EmployeeManagement';
 
-function SuperAdminDashboard() {
+function AdministratorDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,6 +34,8 @@ function SuperAdminDashboard() {
         return <VisitorLogs />;
       case 'lecturers':
         return <LecturerManagement />;
+      case 'employee-management':
+        return <EmployeeManagement />;
       case 'overview':
       default:
         return <DashboardOverview />;
@@ -44,13 +48,14 @@ function SuperAdminDashboard() {
     { name: 'Programs & Courses', icon: AcademicCapIcon, component: 'programs' },
     { name: 'Visitor Logs', icon: BookOpenIcon, component: 'visitors' },
     { name: 'Lecturer Management', icon: BriefcaseIcon, component: 'lecturers' },
-    { name: 'Employee Management', href: '/super-admin/employees', icon: UserIcon },
-    { name: 'Student Management', href: '/super-admin/students', icon: BookOpenIcon },
-    { name: 'System Settings', href: '/super-admin/settings', icon: Cog8ToothIcon },
+    { name: 'Employee Management', icon: UsersIcon, component: 'employee-management' },
+    { name: 'Student Management', href: '/administrator-dashboard/students', icon: BookOpenIcon },
+    { name: 'System Settings', href: '/administrator-dashboard/settings', icon: Cog8ToothIcon },
   ];
 
   const handleLogout = () => {
-    // Implement logout logic
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userType');
     navigate('/login');
   };
 
@@ -70,14 +75,18 @@ function SuperAdminDashboard() {
                   <button
                     key={item.name}
                     onClick={() => {
-                      setCurrentComponent(item.component);
+                      if (item.component) {
+                        setCurrentComponent(item.component);
+                      } else if (item.href) {
+                        navigate(item.href);
+                      }
                       setSidebarOpen(false);
                     }}
                     className={`${
                       currentComponent === item.component
                         ? 'bg-gray-900 text-white'
                         : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                    } group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+                    } group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full`}
                   >
                     <item.icon
                       className="mr-3 flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-300"
@@ -102,7 +111,7 @@ function SuperAdminDashboard() {
                     />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-white">Super Admin</p>
+                    <p className="text-sm font-medium text-white">Administrator</p>
                     <div className="flex items-center text-sm text-gray-400 group-hover:text-gray-300">
                       <ArrowRightOnRectangleIcon className="mr-1 h-4 w-4" />
                       Sign out
@@ -180,7 +189,7 @@ function SuperAdminDashboard() {
                   />
                 </div>
                 <div className="ml-3">
-                  <p className="text-base font-medium text-white">Super Admin</p>
+                  <p className="text-base font-medium text-white">Administrator</p>
                   <div className="flex items-center text-sm text-gray-400 group-hover:text-gray-300">
                     <ArrowRightOnRectangleIcon className="mr-1 h-4 w-4" />
                     Sign out
@@ -235,4 +244,4 @@ function SuperAdminDashboard() {
   );
 }
 
-export default SuperAdminDashboard;
+export default AdministratorDashboard;

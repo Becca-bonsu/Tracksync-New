@@ -4,6 +4,7 @@
     return (
       <header className="bg-white shadow-sm">
         <div className="px-6 py-4 flex items-center justify-between">
+        <h1 className="text-2xl font-semibold text-blue-600">Dashboard</h1>
           <div className="flex items-center space-x-4">
             <button className="lg:hidden">
               <Bars3Icon className="w-6 h-6 text-gray-600" />

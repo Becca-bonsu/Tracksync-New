@@ -96,18 +96,12 @@ function Employees({ searchQuery }) {
 
   const handleEdit = async (employee) => {
     if (isUsingFallback) {
-      alert('Edit functionality is not available in demo mode');
       return;
     }
     // Add your edit logic here
   };
 
   const handleDelete = async (employee) => {
-    // Remove the alert for demo mode
-    // if (isUsingFallback) {
-    //   alert('Delete functionality is not available in demo mode');
-    //   return;
-    // }
 
     if (!window.confirm('Are you sure you want to delete this employee?')) {
       return;
@@ -191,13 +185,13 @@ function Employees({ searchQuery }) {
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-3xl transition-all">
-      {isUsingFallback && (
+      {/* {isUsingFallback && (
         <div className="bg-yellow-50 p-4">
           <p className="text-yellow-800 text-sm">
             Currently showing demo data. Connect to an API to see real data.
           </p>
         </div>
-      )}
+      )} */}
 
       <div className="border-b border-gray-200">
         <div className="sm:flex sm:items-center p-6">

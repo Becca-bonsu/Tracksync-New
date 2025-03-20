@@ -1,12 +1,32 @@
 import { useState } from 'react';
 import { ClockIcon, UsersIcon, ClipboardIcon } from '@heroicons/react/24/outline';
 import QRCodeGenerator from '../attendance/QRCodeGenerator';
+import { useNavigate } from 'react-router-dom';
 
-function CourseCard({ course }) {
+function CourseCard({ course, buttonType }) {
   const [isAttendanceActive, setIsAttendanceActive] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const navigate = useNavigate();
 
   const toggleAttendance = () => {
     setIsAttendanceActive(!isAttendanceActive);
+  };
+
+  const toggleAttendanceOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const viewAttendance = () => {
+    navigate(`/attendance/${course.id}`);
+  };
+
+  const takeAttendance = () => {
+    setShowOptions(true);
+  };
+
+  const viewDetails = () => {
+    console.log(`Navigating to course details for course ID: ${course.id}`);
+    navigate(`/student-dashboard/courses/${course.id}`);
   };
 
   return (
@@ -35,16 +55,38 @@ function CourseCard({ course }) {
         </div>
       </div>
       
-      <button
-        onClick={toggleAttendance}
-        className={`w-full py-2 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-          isAttendanceActive 
-            ? 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 focus:ring-red-500'
-            : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 focus:ring-blue-500'
-        } transition-all`}
-      >
-        {isAttendanceActive ? 'Stop Attendance' : 'Take Attendance'}
-      </button>
+      {buttonType === 'view' ? (
+        <button
+          onClick={viewAttendance}
+          className={`w-full py-2 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 focus:ring-blue-500 transition-all`}
+        >
+          View Attendance
+        </button>
+      ) : (
+        <button
+          onClick={takeAttendance}
+          className={`w-full py-2 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-green-500 hover:to-green-600 focus:ring-green-500 transition-all`}
+        >
+          Take Attendance
+        </button>
+      )}
+
+      {showOptions && (
+        <div className="mt-4">
+          <button
+            onClick={() => navigate(`/scan-attendance/${course.id}`)}
+            className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors mb-2"
+          >
+            Scan Student QR Code
+          </button>
+          <button
+            onClick={() => navigate(`/tick-attendance/${course.id}`)}
+            className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-pink-600 transition-colors"
+          >
+            Take Tick Attendance
+          </button>
+        </div>
+      )}
 
       {isAttendanceActive && (
         <div className="mt-4">
@@ -54,6 +96,13 @@ function CourseCard({ course }) {
           />
         </div>
       )}
+
+      <button
+        onClick={viewDetails}
+        className="mt-4 w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        View Details
+      </button>
     </div>
   );
 }

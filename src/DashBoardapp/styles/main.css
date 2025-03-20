@@ -1,0 +1,28 @@
+/* main.css */
+
+/* General styles for the dashboard */
+body {
+    font-family: Arial, sans-serif; /* Set a default font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background-color: #f0f0f0; /* Light background color */
+}
+
+.dashboard-container {
+    display: flex; /* Use flexbox for layout */
+    height: 100vh; /* Full height of the viewport */
+}
+
+.dashboard-content {
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Add padding around the content */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+h1 {
+    font-size: 2rem; /* Heading size */
+    color: #333; /* Dark text color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Add any additional styles as needed */ 

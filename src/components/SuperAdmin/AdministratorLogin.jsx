@@ -16,7 +16,7 @@ function SuperAdminLogin() {
     if (email === validCredentials.email && password === validCredentials.password) {
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('userType', 'superadmin');
-      navigate('/super-admin/dashboard');
+      navigate('/dashboard');
     } else {
       alert('Invalid credentials. Please try again.');
     }

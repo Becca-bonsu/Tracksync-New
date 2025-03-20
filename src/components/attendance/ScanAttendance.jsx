@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import React from 'react';
 import QRCodeScanner from './QRCodeScanner';
 import AttendanceForm from '../ui/AttendanceForm';
 
-function ScanAttendance() {
-  const [scannedData, setScannedData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+const ScanAttendance = () => {
+  const [scannedData, setScannedData] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   const handleScan = (data) => {
-    console.log('Received scan data:', data); // Debug log
+    console.log('Scanned data:', data);
     if (data && data.courseId && data.courseName) {
       setScannedData(data);
     }
@@ -35,14 +35,9 @@ function ScanAttendance() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-lg mx-auto px-4">
         <h1 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-          Attendance System
+          Scan Student QR Code
         </h1>
-        
-        {!scannedData && (
-          <div className="mb-8">
-            <QRCodeScanner onScan={handleScan} />
-          </div>
-        )}
+        <QRCodeScanner onScan={handleScan} />
         
         {scannedData && !success && (
           <div className="mb-8">
@@ -72,6 +67,6 @@ function ScanAttendance() {
       </div>
     </div>
   );
-}
+};
 
 export default ScanAttendance;
